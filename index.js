@@ -16,5 +16,14 @@ function createArray() {
   return array;
 }
 
-const array = createArray();
-console.log(array);
+// factory function returns a node object
+function Node(value) {
+  return {
+    data: value,
+    left: null,
+    right: null,
+  };
+}
+
+const node = Node(5);
+console.log(node);
