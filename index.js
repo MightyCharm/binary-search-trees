@@ -16,6 +16,17 @@ function createArray() {
   return array;
 }
 
+// function is given from odin project and outputs the tree structure
+function prettyPrint(node, prefix = "", isLeft = true) {
+  if (node === null || node === undefined) {
+    return;
+  }
+
+  prettyPrint(node.right, `${prefix}${isLeft ? "│   " : "    "}`, false);
+  console.log(`${prefix}${isLeft ? "└── " : "┌── "}${node.data}`);
+  prettyPrint(node.left, `${prefix}${isLeft ? "    " : "│   "}`, true);
+}
+
 // factory function returns a node object
 function Node(value) {
   return {
@@ -63,5 +74,5 @@ function Tree(array) {
 }
 
 let array = createArray();
-const myTree = Tree(array);
-console.log(myTree);
+const tree = Tree(array);
+prettyPrint(tree.root);
