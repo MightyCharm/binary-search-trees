@@ -92,10 +92,36 @@ function Tree(array) {
     return true;
   }
 
-  return { root, includes };
+  // calls a recursive function that will insert a given value into the tree
+  function insert(value) {
+    insertNode(root, value);
+  }
+
+  // recursive function which inserts a given value into the tree
+  function insertNode(node, value) {
+    if (value < node.data) {
+      if (!node.left) {
+        node.left = Node(value);
+        return;
+      }
+      insertNode(node.left, value);
+    } else if (value > node.data) {
+      if (!node.right) {
+        node.right = Node(value);
+        return;
+      }
+      insertNode(node.right, value);
+    } else {
+      return;
+    }
+  }
+
+  return { root, includes, insert };
 }
 
 let array = createArray();
 const tree = Tree(array);
+tree.insert(10);
+tree.insert(55);
+tree.insert(3);
 prettyPrint(tree.root);
-console.log(tree.includes(25));
