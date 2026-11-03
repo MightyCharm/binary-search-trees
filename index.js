@@ -25,5 +25,38 @@ function Node(value) {
   };
 }
 
-const node = Node(5);
-console.log(node);
+// factory function manages the binary search tree
+function Tree(array) {
+  let root = buildTree(array);
+
+  // removes duplicates, sorts the array and calls recursive function for tree creation and returns root node
+  function buildTree(array) {
+    const cleanedArray = [];
+    array.forEach((number) => {
+      if (!cleanedArray.includes(number)) {
+        cleanedArray.push(number);
+      }
+    });
+    cleanedArray.sort((a, b) => a - b);
+    const start = 0;
+    const end = cleanedArray.length - 1;
+    return createTree(cleanedArray, start, end);
+  }
+
+  // recursive function that creates the tree
+  function createTree(array, start, end) {
+    if (start > end) return;
+    const mid = Math.floor((start + end) / 2);
+    const node = Node(array[mid]);
+
+    node.left = createTree(array, start, mid - 1);
+    node.right = createTree(array, mid + 1, end);
+    return node;
+  }
+
+  return { root };
+}
+
+let array = createArray();
+const myTree = Tree(array);
+console.log(myTree);
