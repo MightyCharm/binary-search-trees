@@ -29,15 +29,9 @@ function Node(value) {
 function Tree(array) {
   let root = buildTree(array);
 
-  // removes duplicates, sorts the array and calls recursive function for tree creation and returns root node
+  // prepares the array and calls the recursive function, which creates the tree and returns the root node
   function buildTree(array) {
-    const cleanedArray = [];
-    array.forEach((number) => {
-      if (!cleanedArray.includes(number)) {
-        cleanedArray.push(number);
-      }
-    });
-    cleanedArray.sort((a, b) => a - b);
+    const cleanedArray = prepareArray(array);
     const start = 0;
     const end = cleanedArray.length - 1;
     return createTree(cleanedArray, start, end);
@@ -52,6 +46,17 @@ function Tree(array) {
     node.left = createTree(array, start, mid - 1);
     node.right = createTree(array, mid + 1, end);
     return node;
+  }
+
+  // removes duplicates and returns a sorted array
+  function prepareArray(array) {
+    const cleanedArray = [];
+    array.forEach((num) => {
+      if (!cleanedArray.includes(num)) {
+        cleanedArray.push(num);
+      }
+    });
+    return cleanedArray.sort((a, b) => a - b);
   }
 
   return { root };
