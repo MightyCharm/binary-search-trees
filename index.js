@@ -45,6 +45,7 @@ function Tree(array) {
     const cleanedArray = prepareArray(array);
     const start = 0;
     const end = cleanedArray.length - 1;
+
     return createTree(cleanedArray, start, end);
   }
 
@@ -70,9 +71,31 @@ function Tree(array) {
     return cleanedArray.sort((a, b) => a - b);
   }
 
-  return { root };
+  // calls a recursive function that searches for a given value and returns true or false
+  function includes(value) {
+    const is_included = searchValue(root, value);
+    return is_included;
+  }
+
+  // recursive function searches after a target inside the tree
+  function searchValue(node, target) {
+    if (!node) {
+      return false;
+    }
+    const value = node.data;
+    if (target < value) {
+      return searchValue(node.left, target);
+    }
+    if (target > value) {
+      return searchValue(node.right, target);
+    }
+    return true;
+  }
+
+  return { root, includes };
 }
 
 let array = createArray();
 const tree = Tree(array);
 prettyPrint(tree.root);
+console.log(tree.includes(25));
